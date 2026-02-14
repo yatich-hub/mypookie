@@ -82,7 +82,7 @@ p {
     cursor: pointer;
     background-color: #ff6f91;
     color: white;
-    display: inline-block;
+    display: none; /* Hidden until card is clicked */
     animation: dance 1s infinite;
 }
 
@@ -119,31 +119,26 @@ p {
 const card = document.getElementById('card');
 const message = document.getElementById('message');
 const hint = card.querySelector('small');
-const audio = document.getElementById('song');
 const danceBtn = document.getElementById('dance-button');
+const audio = document.getElementById('song');
 let opened = false;
 
-// Click card to reveal message and play song
+// Click card to reveal message and show the dancing button
 card.addEventListener('click', () => {
     if (!opened) {
         message.style.display = 'block';
         hint.style.display = 'none';
         danceBtn.style.display = 'inline-block'; // show dancing button
         opened = true;
-
-        audio.play().catch(err => {
-            console.log("Audio playback failed:", err);
-        });
     }
 });
 
-// Optional: clicking dance button toggles song play/pause
+// Click the "Bae" button to play music (works on all browsers)
 danceBtn.addEventListener('click', () => {
-    if (audio.paused) {
-        audio.play();
-    } else {
-        audio.pause();
-    }
+    audio.play().catch(err => {
+        console.log("Audio playback failed:", err);
+        alert("Audio couldn't play. Make sure your browser allows audio playback.");
+    });
 });
 
 // Floating hearts
