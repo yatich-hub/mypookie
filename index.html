@@ -48,6 +48,18 @@
             animation: beat 1s infinite;
         }
 
+        button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            background-color: #ff6f91;
+            color: white;
+            display: none; /* Hidden until card is clicked */
+        }
+
         @keyframes beat {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -86,25 +98,28 @@
     </p>
     <div class="heart">❤️</div>
     <small style="display:block; margin-top: 10px; font-style: italic; opacity: 0.7;">Click this card to open the message</small>
+    <button id="play-button">Play My Song 🎵</button>
 </div>
-
-<audio id="love-music" autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2021/12/23/audio_f5e36f7806.mp3?filename=happy-love-11788.mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
-</audio>
 
 <script>
     const card = document.getElementById('card');
     const message = document.getElementById('message');
     const hint = card.querySelector('small');
+    const button = document.getElementById('play-button');
     let opened = false;
+    let audio = new Audio('https://cdn.pixabay.com/download/audio/2021/12/23/audio_f5e36f7806.mp3?filename=happy-love-11788.mp3');
 
     card.addEventListener('click', () => {
         if (!opened) {
             message.style.display = 'block';
             hint.style.display = 'none';
+            button.style.display = 'inline-block';
             opened = true;
         }
+    });
+
+    button.addEventListener('click', () => {
+        audio.play();
     });
 
     function createHeart() {
@@ -125,4 +140,3 @@
 
 </body>
 </html>
-
