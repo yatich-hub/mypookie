@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Happy Valentine's Day, Mercy 💘</title>
+
 <style>
 body {
     margin: 0;
@@ -11,34 +12,41 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #ff4e8a, #ff9a9e);
+    background: black;
     font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
 }
 
+/* Romantic background video */
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    filter: brightness(0.6) blur(1px);
+}
+
 .card {
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     padding: 50px;
     border-radius: 25px;
     text-align: center;
     color: white;
     max-width: 600px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     cursor: pointer;
     user-select: none;
     position: relative;
     transition: transform 0.2s;
 }
 
-.card:hover {
-    transform: scale(1.02);
-}
+.card:hover { transform: scale(1.02); }
 
-h1 {
-    font-size: 42px;
-    margin-bottom: 20px;
-}
+h1 { font-size: 42px; margin-bottom: 20px; }
 
 p {
     font-size: 20px;
@@ -54,7 +62,7 @@ p {
 }
 
 @keyframes beat {
-    0%, 100% { transform: scale(1); }
+    0%,100% { transform: scale(1); }
     50% { transform: scale(1.2); }
 }
 
@@ -82,20 +90,26 @@ p {
     cursor: pointer;
     background-color: #ff6f91;
     color: white;
-    display: none; /* Hidden until card is clicked */
+    display: none;
     animation: dance 1s infinite;
 }
 
 @keyframes dance {
-    0% { transform: translateY(0) rotate(0deg); background-color: #ff6f91; }
-    25% { transform: translateY(-10px) rotate(-10deg); background-color: #ff8cb3; }
-    50% { transform: translateY(0) rotate(10deg); background-color: #ff6f91; }
-    75% { transform: translateY(-10px) rotate(-10deg); background-color: #ff8cb3; }
-    100% { transform: translateY(0) rotate(0deg); background-color: #ff6f91; }
+    0% { transform: translateY(0) rotate(0deg); background-color:#ff6f91;}
+    25% { transform: translateY(-10px) rotate(-10deg); background-color:#ff8cb3;}
+    50% { transform: translateY(0) rotate(10deg); background-color:#ff6f91;}
+    75% { transform: translateY(-10px) rotate(-10deg); background-color:#ff8cb3;}
+    100% { transform: translateY(0) rotate(0deg); background-color:#ff6f91;}
 }
 </style>
 </head>
+
 <body>
+
+<!-- Romantic Video Background -->
+<video id="bg-video" autoplay muted loop playsinline>
+    <source src="https://cdn.pixabay.com/vimeo/328940142/heart-19698.mp4" type="video/mp4">
+</video>
 
 <div class="card" id="card">
     <h1>Happy Valentine's Day, Mercy 💘</h1>
@@ -105,15 +119,20 @@ p {
         I’m so grateful for your love, your smile, and the way you make my heart feel at home.<br><br>
         I love you more than words can ever explain.
     </p>
+
     <div class="heart">❤️</div>
-    <small style="display:block; margin-top: 10px; font-style: italic; opacity: 0.7;">
+
+    <small style="display:block; margin-top:10px; font-style:italic; opacity:0.7;">
         Click this card to open the message
     </small>
+
     <button id="dance-button">💃 Bae 💃</button>
 </div>
 
-<!-- Audio element -->
-<audio id="song" src="https://cdn.pixabay.com/download/audio/2021/12/23/audio_f5e36f7806.mp3?filename=happy-love-11788.mp3"></audio>
+<!-- Romantic music -->
+<audio id="song"
+src="https://cdn.pixabay.com/download/audio/2021/12/23/audio_f5e36f7806.mp3?filename=happy-love-11788.mp3"
+loop></audio>
 
 <script>
 const card = document.getElementById('card');
@@ -123,36 +142,38 @@ const danceBtn = document.getElementById('dance-button');
 const audio = document.getElementById('song');
 let opened = false;
 
-// Click card to reveal message and show the dancing button
+/* FIRST CLICK = show message + start music */
 card.addEventListener('click', () => {
     if (!opened) {
         message.style.display = 'block';
         hint.style.display = 'none';
-        danceBtn.style.display = 'inline-block'; // show dancing button
+        danceBtn.style.display = 'inline-block';
         opened = true;
+
+        // Fade-in music 🎶
+        audio.volume = 0;
+        audio.play().catch(()=>{});
+
+        let vol = 0;
+        const fade = setInterval(() => {
+            if (vol < 0.5) {
+                vol += 0.02;
+                audio.volume = vol;
+            } else clearInterval(fade);
+        }, 200);
     }
 });
 
-// Click the "Bae" button to play music (works on all browsers)
-danceBtn.addEventListener('click', () => {
-    audio.play().catch(err => {
-        console.log("Audio playback failed:", err);
-        alert("Audio couldn't play. Make sure your browser allows audio playback.");
-    });
-});
-
-// Floating hearts
+/* Floating hearts generator */
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("floating-heart");
     heart.innerHTML = "💖";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    heart.style.animationDuration = (Math.random()*3+3)+"s";
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 6000);
 }
-
 setInterval(createHeart, 500);
 </script>
 
