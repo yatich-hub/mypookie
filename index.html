@@ -1,90 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Happy Valentine's Day, Mercy 💘</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ff4e8a, #ff9a9e);
-            font-family: 'Segoe UI', sans-serif;
-            overflow: hidden;
-        }
+<meta charset="UTF-8" />
+<title>Happy Valentine's Day, Mercy 💘</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ff4e8a, #ff9a9e);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
 
-        .card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 50px;
-            border-radius: 25px;
-            text-align: center;
-            color: white;
-            max-width: 600px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-        }
+.card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 50px;
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+    max-width: 600px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 20px;
-        }
+h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
 
-        p {
-            font-size: 20px;
-            line-height: 1.6;
-            display: none;
-            margin-top: 20px;
-        }
+p {
+    font-size: 20px;
+    line-height: 1.6;
+    display: none;
+    margin-top: 20px;
+}
 
-        .heart {
-            font-size: 40px;
-            margin-top: 20px;
-            animation: beat 1s infinite;
-        }
+.heart {
+    font-size: 40px;
+    margin-top: 20px;
+    animation: beat 1s infinite;
+}
 
-        button {
-            margin-top: 20px;
-            padding: 10px 25px;
-            font-size: 18px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            background-color: #ff6f91;
-            color: white;
-            display: none; /* Hidden until card is clicked */
-        }
+button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #ff6f91;
+    color: white;
+    display: none; /* Hidden until card is clicked */
+}
 
-        @keyframes beat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
+@keyframes beat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
 
-        /* Floating hearts */
-        .floating-heart {
-            position: absolute;
-            bottom: -20px;
-            font-size: 20px;
-            animation: floatUp 6s linear infinite;
-            opacity: 0.7;
-        }
+/* Floating hearts */
+.floating-heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.7;
+}
 
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-110vh);
-                opacity: 0;
-            }
-        }
-    </style>
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0.7; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+}
+</style>
 </head>
 <body>
 
@@ -97,45 +91,55 @@
         I love you more than words can ever explain.
     </p>
     <div class="heart">❤️</div>
-    <small style="display:block; margin-top: 10px; font-style: italic; opacity: 0.7;">Click this card to open the message</small>
+    <small style="display:block; margin-top: 10px; font-style: italic; opacity: 0.7;">
+        Click this card to open the message
+    </small>
     <button id="play-button">Play My Song 🎵</button>
 </div>
 
+<!-- Audio element added in DOM -->
+<audio id="song" src="https://cdn.pixabay.com/download/audio/2021/12/23/audio_f5e36f7806.mp3?filename=happy-love-11788.mp3"></audio>
+
 <script>
-    const card = document.getElementById('card');
-    const message = document.getElementById('message');
-    const hint = card.querySelector('small');
-    const button = document.getElementById('play-button');
-    let opened = false;
-    let audio = new Audio('https://cdn.pixabay.com/download/audio/2021/12/23/audio_f5e36f7806.mp3?filename=happy-love-11788.mp3');
+const card = document.getElementById('card');
+const message = document.getElementById('message');
+const hint = card.querySelector('small');
+const button = document.getElementById('play-button');
+const audio = document.getElementById('song');
 
-    card.addEventListener('click', () => {
-        if (!opened) {
-            message.style.display = 'block';
-            hint.style.display = 'none';
-            button.style.display = 'inline-block';
-            opened = true;
-        }
-    });
+let opened = false;
 
-    button.addEventListener('click', () => {
-        audio.play();
-    });
-
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("floating-heart");
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-            heart.remove();
-        }, 6000);
+// Click card to reveal message & show button
+card.addEventListener('click', () => {
+    if (!opened) {
+        message.style.display = 'block';
+        hint.style.display = 'none';
+        button.style.display = 'inline-block';
+        opened = true;
     }
+});
 
-    setInterval(createHeart, 500);
+// Play song reliably on button click
+button.addEventListener('click', () => {
+    audio.play().catch(err => {
+        console.log("Audio playback failed:", err);
+        alert("Audio couldn't play. Make sure your browser allows autoplay.");
+    });
+});
+
+// Floating hearts function
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("floating-heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 500);
 </script>
 
 </body>
